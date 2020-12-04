@@ -26,17 +26,16 @@ COLORS = {
         },
 }
 
-GUI_DIM = {"width": 700, "height": 450}
-
 
 class GUI(tk.Frame):
     global GUI_DIM
+
     def __init__(self, master):
         super().__init__(master)
         self.master = master
         master.title("Student ID Utility")
         master.resizable(width=False, height=False)
-        master.geometry(width=GUI_DIM['width'], height=GUI_DIM['height'])
+        master.geometry("700x450+100+100")
         master['bg'] = COLORS['antique_white']['py_name']
 
         self.frame_leftTop = tk.Frame(master, bg="red", height=225, width=150)
