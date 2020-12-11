@@ -1,70 +1,78 @@
 #!/usr/bin/python3
 
 # STANDARD LIBRARY IMPORTS
+import os
 import tkinter as tk
 import tkinter.font as tk_font
-from tkinter import (ttk, messagebox)
-
+from tkinter import (ttk, messagebox, filedialog)
+from shutil import copy2
+from datetime import datetime
+from pathlib import Path
 # THIRD PARTY IMPORTS
 
 # LOCAL IMPORTS
-# from rename_files import ...
-
-
-COLORS = {
-    "light_steel_blue": {
-        "py_name": "light steel blue",
-        "hex": "#B0C4DE",
-        },
-    "light_coral": {
-        "py_name": "light coral",
-        "hex": "#F08080",
-        },
-    "lavender": {
-        "py_name": "lavender",
-        "hex": "#E6E6FA",
-        },
-    "antique_white": {
-        "py_name": "antique white",
-        "hex": "#FAEBD7",
-        },
-}
+from config import Colors, GUI_Setup
+from rename import Photos as p_
 
 
 class GUI(tk.Frame):
 
-    def __init__(self, master, title, app_width, app_height, x, y):
+    def __init__(self, master, title: str, app_width: int, app_height: int, x: int, y: int):
         super(GUI, self).__init__(master=master)
         self.master = master
         master.title(string=title)
         master.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
-        master.resizable(width=False, height=False)
-        master['bg'] = "#B0C4DE"
+        master.resizable(
+            width=GUI_Setup.RESIZABLE['width'],
+            height=GUI_Setup.RESIZABLE['height']
+        )
+        master['bg'] = Colors.BLUE['hex']
         self.initialize_UI()
 
-    def initialize_UI(self):
-        pass
+    def initialize_UI(self) -> None:
+        root = tk.Tk()
+        root.option_add('*tearOff', False)
+        X = (root.winfo_screenwidth() / 2) \
+            - ((APP_WIDTH := GUI_Setup.APP_WIDTH) / 2)
+        Y = (root.winfo_screenheight() / 2) \
+            - ((APP_HEIGHT := GUI_Setup.APP_HEIGHT) / 2)
+        gui = GUI(
+            master=root,
+            title=GUI_Setup.TITLE,
+            app_width=int(APP_WIDTH),
+            app_height=int(APP_HEIGHT),
+            x=X,
+            y=Y
+        )
+        gui.mainloop()
 
 
 def main():
-    root = tk.Tk()
-    root.option_add('*tearOff', False)
-    TITLE = "Cafe POS Database Management"
-    SCREEN_WIDTH = root.winfo_screenwidth()
-    SCREEN_HEIGHT = root.winfo_screenheight()
-    APP_WIDTH = 650
-    APP_HEIGHT = 625
-    X = (SCREEN_WIDTH / 2) - (APP_WIDTH / 2)
-    Y = (SCREEN_HEIGHT / 2) - (APP_HEIGHT / 2)
-    gui = GUI(
-        master=root,
-        title=TITLE,
-        app_width=APP_WIDTH,
-        app_height=APP_HEIGHT,
-        x=X,
-        y=Y
-    )
-    gui.mainloop()
+
+    if p_.print_instructions():
+        # dir_list_orig = p_.get_dir_list()
+        # temp_dir = None
+        temp_dir_FULL = None
+        timestamp = f"[{'%m'}{'%d'}_{'%H'}{'%M'}{'%f'}]"
+
+        try:
+            p_.create_temp_dir(
+                temp_dir := f"./temp{datetime.now().strftime(timestamp)}/")
+            p_.copy_files(dir_list_orig := p_.get_dir_list(), temp_dir)
+        except OSError as err:
+            print(f'[ERROR] {err}')
+        else:
+            os.chdir(temp_dir)
+        finally:
+            temp_dir_FULL = os.getcwd()
+
+        dir_list_temp = os.listdir() if os.getcwd() == temp_dir_FULL else None
+
+        if dir_list_temp is not None:
+            p_.rename_files(dir_list_temp)
+
+    else:
+        print('Please apply proper naming convention before running this utility!')
 
 
 if __name__ == '__main__':
