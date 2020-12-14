@@ -2,19 +2,118 @@
 
 # STANDARD LIBRARY IMPORTS
 import tkinter as tk
-import tkinter.font as tk_font
-from tkinter import (ttk, messagebox)
+from tkinter import (ttk, messagebox, font as tk_font)
 from pathlib import Path
-# THIRD PARTY IMPORTS
-
-# LOCAL IMPORTS
+from typing import (Dict, List, Iterator, Tuple, Any)
 
 
 class GUI_Setup:
-    TITLE = "Cafe POS Database Management"
-    APP_WIDTH = 650
-    APP_HEIGHT = 625
+    TITLE = "Student ID Manager"
+    APP_WIDTH = 450
+    APP_HEIGHT = 450
     RESIZABLE = {"width": False, "height": True}
+    COLORS = {
+        "BLUE": {
+            "py_name": "light steel blue",
+            "hex": "#B0C4DE",
+        },
+        "CORAL": {
+            "py_name": "light coral",
+            "hex": "#F08080",
+        },
+        "LAVENDER": {
+            "py_name": "lavender",
+            "hex": "#E6E6FA",
+        },
+        "WHITE": {
+            "py_name": "antique white",
+            "hex": "#FAEBD7",
+        },
+    }
+    FONTS = {
+        "DEFAULT": {
+            "family": "JetBrains Mono",
+            "size": 12,
+            "weight": tk.NORMAL,
+        },
+        "MESSAGEBOX": {
+            "family": "Courier",
+            "size": 11,
+            "weight": tk.NORMAL,
+        },
+    }
+    THEMES: Tuple[str, ...] = (
+        "default", "classic", "clam", "aqua", "alt",
+    )
+
+
+class Frame_Setup:
+    KWARGS_FRAME = {
+        "padding": (5,),
+        "relief": tk.FLAT,
+        "borderwidth": None,
+        "width": None,
+        "height": None,
+        "style": None,
+    }
+    KWARGS_PACK = {
+        "expand": tk.YES,
+        "fill": tk.BOTH,
+        "padx": 5,
+        "pady": 5,
+        "ipadx": 5,
+        "ipady": 5,
+    }
+    KWARGS_GRID_INIT = {
+        "padx": 5,
+        "pady": 5,
+        "ipadx": 5,
+        "ipady": 5,
+    }
+    KWARGS_GRID_HEADER = {
+        "column": None,
+        "row": None,
+        "sticky": None,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "columnspan": None,
+    }
+    KWARGS_GRID_NAV = {
+        "column": None,
+        "row": None,
+        "sticky": None,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "columnspan": None,
+    }
+    KWARGS_GRID_INTERFACE_PARENT = {
+        "column": None,
+        "row": None,
+        "sticky": None,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "columnspan": None,
+    }
+    KWARGS_GRID_INTERFACE_CHILD_RENAME = {
+        "column": None,
+        "row": None,
+        "sticky": None,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "columnspan": None,
+    }
+    KWARGS_GRID_INTERFACE_CHILD_PHOTO = {
+        "column": None,
+        "row": None,
+        "sticky": None,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "columnspan": None,
+    }
+    SIDES = (tk.TOP, tk.LEFT, tk.RIGHT, None, None,)
+    CNF = KWARGS_PACK
+
+
+class Button_Setup:
+    pass
+
+
+class Label_Setup:
+    pass
+
+
+class Entry_Setup:
+    pass
 
 
 class FS_Setup:
@@ -41,23 +140,12 @@ class FS_Setup:
     [EXAMPLE]
           1025_Aardvark-Arthur_A00123456.jpg
     """
-    CONFIRMATION = "All files named properly? [Y/N] >>: "
+    CONFIRMATION = "All files named properly?"
 
 
-class Colors:
-    BLUE = {
-        "py_name": "light steel blue",
-        "hex": "#B0C4DE",
-    }
-    CORAL = {
-        "py_name": "light coral",
-        "hex": "#F08080",
-    }
-    LAVENDER = {
-        "py_name": "lavender",
-        "hex": "#E6E6FA",
-    }
-    WHITE = {
-        "py_name": "antique white",
-        "hex": "#FAEBD7",
-    }
+class Messages:
+    INSTRUCTIONS: Dict[str, str] = {
+        "title": "CONFIRM PROPER NAMING CONVENTION!",
+        "message": "Please confirm proper file naming convention (ALL files):" \
+        f"\n{FS_Setup.INSTRUCTIONS}\n\n{FS_Setup.CONFIRMATION}"
+        }

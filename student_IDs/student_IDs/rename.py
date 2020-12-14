@@ -12,6 +12,7 @@ from typing import List
 # THIRD PARTY IMPORTS
 
 # LOCAL IMPORTS
+from config import Messages
 
 
 class Photos:
@@ -23,17 +24,12 @@ class Photos:
         """Print Initial Instructions
         :returns confirmed: boolean control variable -> True=continue, False=exit
         """
-        instructions = """REQUIRED FILE NAME FORMAT:
-      (photo_date)_(student_last-student_first)_(A_number).jpg
-
-        [EXAMPLE]
-              1025_Aardvark-Arthur_A00123456.jpg
-        """
-        print(instructions)
-        print()
-        usr_prompt = input('All files named properly? [Y/N] >>: ')
-        confirmed = True if usr_prompt.lower() == 'y' else False
-        print()
+        # usr_prompt = input('All files named properly? [Y/N] >>: ')
+        # confirmed = True if usr_prompt.lower() == 'y' else False
+        confirmed = messagebox.askyesno(
+            title=Messages.INSTRUCTIONS['title'],
+            message=Messages.INSTRUCTIONS['message'],
+        )
 
         return confirmed
 
@@ -90,40 +86,3 @@ class Photos:
                 print(f'[ERROR] {err}')
 
         print(f'Files renamed: {count}')
-
-
-# def main():
-#     """Main Program
-#     """
-#     br = Bulk_Rename()
-#
-#     confirmed = br.print_instructions()
-#
-#     if confirmed:
-#         dir_list_orig = br.get_dir_list()
-#         # temp_dir = None
-#         temp_dir_FULL = None
-#         timestamp = f"[{'%m'}{'%d'}_{'%H'}{'%M'}{'%f'}]"
-#
-#         try:
-#             br.create_temp_dir(
-#                 temp_dir := f"./temp{datetime.now().strftime(timestamp)}/")
-#             br.copy_files(dir_list_orig, temp_dir)
-#         except OSError as err:
-#             print(f'[ERROR] {err}')
-#         else:
-#             os.chdir(temp_dir)
-#         finally:
-#             temp_dir_FULL = os.getcwd()
-#
-#         dir_list_temp = os.listdir() if os.getcwd() == temp_dir_FULL else None
-#
-#         if dir_list_temp is not None:
-#             br.rename_files(dir_list_temp)
-#
-#     else:
-#         print('Please apply proper naming convention before running this utility!')
-#
-#
-# if __name__ == '__main__':
-#     main()
