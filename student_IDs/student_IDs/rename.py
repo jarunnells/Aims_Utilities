@@ -25,6 +25,7 @@ class Photos:
         self.root_path = root_path
         self.temp_path = temp_path
         self.photo_path = photo_path
+        self.confirmed = None
 
     def instructions(self) -> bool:
         """Print Initial Instructions

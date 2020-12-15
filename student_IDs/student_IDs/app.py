@@ -149,53 +149,6 @@ class GUI(tk.Frame):
         # for i, frame in enumerate(FRAMES):
         #     frame.pack(cnf=Frame_Setup.CNF, side=Frame_Setup.SIDES[i])
 
-        '''
-        FRAMES = {
-            "self.frame_header": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.TOP,
-                "padx": 5,
-                "pady": 5,
-            },
-            "self.frame_nav": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.LEFT,
-                "padx": 5,
-                "pady": 5,
-            },
-            "self.frame_interface_parent": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.RIGHT,
-                "padx": 5,
-                "pady": 5,
-            },
-            "self.frame_interface_child_rename": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.RIGHT,
-                "padx": 5,
-                "pady": 5,
-            },
-            "self.frame_interface_child_photo": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.RIGHT,
-                "padx": 5,
-                "pady": 5,
-            },
-            "self.frame_footer": {
-                "expand": tk.YES,
-                "fill": tk.BOTH,
-                "side": tk.BOTTOM,
-                "padx": 5,
-                "pady": 5,
-            }
-        }
-        '''
-
     def create_buttons(self):
         """create_buttons >> Add button widgets to frame(s)
 

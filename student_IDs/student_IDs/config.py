@@ -38,7 +38,7 @@ class GUI_Setup:
         },
         "MESSAGEBOX": {
             "family": "Courier",
-            "size": 11,
+            "size": 12,
             "weight": tk.NORMAL,
         },
     }
@@ -105,15 +105,47 @@ class Frame_Setup:
 
 
 class Button_Setup:
-    pass
+    KWARGS_GRID_INIT = {
+        "padx": 5,
+        "pady": 5,
+        "ipadx": 5,
+        "ipady": 5,
+    }
+    KWARGS_GRID_MSGBOX_CONF = {
+        "row": 1,
+        "column": 0,
+        "sticky": tk.E}
+    KWARGS_GRID_MSGBOX_CXL = {
+        "row": 1,
+        "column": 1,
+        "sticky": tk.W}
+    KWARGS_GRID_ = {}
 
 
 class Label_Setup:
-    pass
+    KWARGS_GRID_INIT = {
+        "padx": 5,
+        "pady": 5,
+        "ipadx": 5,
+        "ipady": 5,
+    }
+    KWARGS_GRID_MSGBOX = {
+        "row": 0,
+        "column": 0,
+        "columnspan": 2,
+        "sticky": tk.N+tk.S+tk.E+tk.W
+    }
+    KWARGS_GRID_ = {}
 
 
 class Entry_Setup:
-    pass
+    KWARGS_GRID_INIT = {
+        "padx": 5,
+        "pady": 5,
+        "ipadx": 5,
+        "ipady": 5,
+    }
+    KWARGS_GRID_ = {}
 
 
 class FS_Setup:
@@ -147,5 +179,5 @@ class Messages:
     INSTRUCTIONS: Dict[str, str] = {
         "title": "CONFIRM PROPER NAMING CONVENTION!",
         "message": "Please confirm proper file naming convention (ALL files):" \
-        f"\n{FS_Setup.INSTRUCTIONS}\n\n{FS_Setup.CONFIRMATION}"
+        f"\n\n{FS_Setup.INSTRUCTIONS}\n\n{FS_Setup.CONFIRMATION}"
         }
