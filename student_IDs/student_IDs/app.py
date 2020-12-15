@@ -20,7 +20,13 @@ from filesys import File_Sys
 
 class GUI(tk.Frame):
     # def __init__(self, *args, **kwargs):
-    def __init__(self, master, title: str, app_width: int, app_height: int, x: int, y: int):
+    def __init__(self, master,
+                 title: str,
+                 app_width: int,
+                 app_height: int,
+                 x: int,
+                 y: int
+                 ):
         super(GUI, self).__init__(master=master)
         self.master = master
         self.master.title(string=title)
@@ -35,8 +41,11 @@ class GUI(tk.Frame):
             size=GUI_Setup.FONTS['DEFAULT']['size'],
             weight=GUI_Setup.FONTS['DEFAULT']['weight'],
         )
-        self.p_ = Photos()
-        self.fs_ = File_Sys()
+        self.p_ = Photos(root_path=Path.cwd())
+        self.fs_ = File_Sys(
+            home_dir=Path.home(),
+            init_dir=Path(Path.home(), 'Desktop')
+        )
         self.container_list = []
         self.initialize_UI()
 
@@ -224,28 +233,41 @@ class GUI(tk.Frame):
         print("BULK RENAME Clicked...")
         if self.p_.instructions():
             print("Good Job!")
-            # dir_list_orig = self.p_.get_dir_list()
-            # temp_dir = None
-            # temp_dir_FULL = None
-            # timestamp = f"[{'%m'}{'%d'}_{'%H'}{'%M'}{'%f'}]"
-            #
-            # try:
-            #     self.p_.create_temp_dir(
-            #         temp_dir := f"./temp{datetime.now().strftime(timestamp)}/")
-            #     self.p_.copy_files(dir_list_orig := self.p_.get_dir_list(), temp_dir)
-            # except OSError as err:
-            #     print(f'[ERROR] {err}')
+            image_dir = self.get_directory()
+            timestamp = f"[{'%m'}{'%d'}_{'%H'}{'%M'}{'%f'}]"
+
+            try:
+                self.p_.create_temp_dir(
+                    temp_dir := Path(
+                        image_dir,
+                        f"temp_{datetime.now().strftime(timestamp)}"
+                    )
+                )
+                self.p_.copy_files(
+                    self.p_.get_dir_list(image_dir),
+                    temp_dir
+                )
+            except OSError as err:
+                print(f"[ERROR] {err}")
+            except TypeError as err:
+                print(f"[ERROR] {err}")
+            except Exception as err:
+                print(f"[ERROR] {err}")
             # else:
             #     os.chdir(temp_dir)
-            # finally:
-            #     temp_dir_FULL = os.getcwd()
-            #
-            # dir_list_temp = os.listdir() if os.getcwd() == temp_dir_FULL else None
-            #
-            # if dir_list_temp is not None:
-            #     self.p_.rename_files(dir_list_temp)
+            finally:
+                # temp_dir_FULL = os.getcwd()
+                temp_dir_FULL = Path(temp_dir).cwd()
+
+            # dir_list_temp = os.listdir() \
+                # if os.getcwd() == temp_dir_FULL else None
+            dir_list_temp = Path(temp_dir).iterdir() \
+                if Path.cwd() == temp_dir_FULL else None
+
+            if dir_list_temp is not None:
+                self.p_.rename_files(dir_list_temp)
         else:
-            print('Please apply proper naming convention before running this utility!')
+            print("Proper naming convention required before running this utility!")
 
 
 def main():

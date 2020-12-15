@@ -7,7 +7,7 @@ import tkinter.font as tk_font
 from tkinter import (ttk, messagebox, filedialog)
 from shutil import copy2
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import List
 # THIRD PARTY IMPORTS
 
@@ -17,8 +17,14 @@ from config import Messages
 
 class Photos:
 
-    def __init__(self):
-        pass
+    def __init__(self,
+                 root_path: str = None,
+                 temp_path: str = None,
+                 photo_path: str = None
+                 ):
+        self.root_path = root_path
+        self.temp_path = temp_path
+        self.photo_path = photo_path
 
     def instructions(self) -> bool:
         """Print Initial Instructions
@@ -30,26 +36,21 @@ class Photos:
             title=Messages.INSTRUCTIONS['title'],
             message=Messages.INSTRUCTIONS['message'],
         )
-
         return confirmed
 
-    def get_dir_list(self) -> List[str]:
-        """Prompt for directory and get file list
+    def get_dir_list(self, dir_path: str) -> List[str]:
+        """Get directory file listing
         :returns dir_list: directory file listing
         """
         # dir_path = './test_files'
-        temp = './test_files'
-        dir_path = input(f'Directory PATH {temp} >>: ')
-        os.chdir(dir_path)
-
-        return os.listdir()
+        return Path(dir_path).listdir()
 
     def create_temp_dir(self, temp_dir: str) -> None:
         """Create temp directory to store renamed files
         :param temp_dir: directory string passed for validation
         """
-        if not os.path.isdir(temp_dir):
-            os.makedirs(temp_dir)
+        if not Path(temp_dir).is_dir():
+            Path(temp_dir).mkdir(parents=True, )
         else:
             pass
 
@@ -59,11 +60,12 @@ class Photos:
         """
         count = 0
         for i, f in enumerate(dir_list, start=1):
-            if os.path.isfile(f):  # && !os.path.isdir(f):
+            # if os.path.isfile(f):  # && !os.path.isdir(f):
+            if Path(f).is_file():  # && !Path(f).is_dir():
                 # copy2(f, f'./temp/{f}')
-                copy2(f, f'{temp_dir}{f}')
+                copy2(f, f"{temp_dir}{f}")
                 count += 1
-        print(f'Files moved: {count}')
+        print(f"Files moved: {count}")
 
     def rename_files(self, dir_list: str) -> None:
         """Rename files method
@@ -71,7 +73,9 @@ class Photos:
         """
         count = 0
         for i, f in enumerate(dir_list, start=1):
-            f_name, f_ext = os.path.splitext(f)
+            # f_name, f_ext = os.path.splitext(f)
+            f_name = PurePath(f).stem
+            f_ext = PurePath(f).suffix
             pic_date, student, a_num = f_name.split('_')
             pic_date = pic_date.strip().zfill(4)
             student = student.strip()
@@ -79,10 +83,11 @@ class Photos:
             a_num_masked = a_num[5:].strip()
 
             try:
-                f_name_NEW = f'{pic_date}_{student}_A-{a_num_masked}{f_ext}'
-                os.rename(f, f_name_NEW)
+                f_name_NEW = f"{pic_date}_{student}_A-{a_num_masked}{f_ext}"
+                # os.rename(f, f_name_NEW)
+                Path(f).rename(f_name_NEW)
                 count += 1
             except OSError as err:
-                print(f'[ERROR] {err}')
+                print(f"[ERROR] {err}")
 
-        print(f'Files renamed: {count}')
+        print(f"Files renamed: {count}")
