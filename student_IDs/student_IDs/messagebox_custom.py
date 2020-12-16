@@ -9,7 +9,10 @@ from tkinter import (ttk, font as tk_font)
 from config import GUI_Setup, Button_Setup, Label_Setup, Messages
 
 
-class MessageboxCustom:
+# class MessageboxCustom():
+# class MessageboxCustom(tk.Toplevel):
+class MessageboxCustom(tk.Tk):
+    """MessageboxCustom."""
 
     def __init__(self,
                  title: str,
@@ -34,6 +37,9 @@ class MessageboxCustom:
             lambda e: self.destroy_window(self.toplevel_window)
         )
         self.toplevel_window.mainloop()
+
+    def __del__(self):
+        return self.confirmed
 
     def create_styles(self):
         self.ttk_style = ttk.Style()
@@ -108,7 +114,9 @@ def main():
     msg_lbl = Messages.INSTRUCTIONS['message']
     geometry = "450x225"
     msgbox = MessageboxCustom(title=title, msg_lbl=msg_lbl, geometry=geometry)
+    print(f"msgbox.__del__(): {msgbox.__del__()}")
     print(f"msgbox.confirmed: {msgbox.confirmed}")
+    print(f"msgbox: {msgbox}")
 
 
 if __name__ == '__main__':
