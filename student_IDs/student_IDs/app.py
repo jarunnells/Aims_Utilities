@@ -17,7 +17,7 @@ from filesys import File_Sys
 # p_ = Photos()
 # fs_ = File_Sys()
 
-
+# TODO: ERROR CATCHING!!!!
 class GUI(tk.Frame):
     # def __init__(self, *args, **kwargs):
     def __init__(self, master,
@@ -218,7 +218,7 @@ class GUI(tk.Frame):
                 if Path.cwd() == temp_dir_FULL else None
 
             if dir_list_temp is not None:
-                self.p_.rename_files(dir_list_temp)
+                self.p_.rename_files(dir_list_temp, temp_dir)
         else:
             print("Proper naming convention required before running this utility!")
 

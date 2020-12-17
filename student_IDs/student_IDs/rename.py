@@ -44,7 +44,7 @@ class Photos:
         :returns dir_list: directory file listing
         """
         # dir_path = './test_files'
-        return Path(dir_path).listdir()
+        return Path(dir_path).iterdir()
 
     def create_temp_dir(self, temp_dir: str) -> None:
         """Create temp directory to store renamed files
@@ -64,24 +64,32 @@ class Photos:
             # if os.path.isfile(f):  # && !os.path.isdir(f):
             if Path(f).is_file():  # && !Path(f).is_dir():
                 # copy2(f, f'./temp/{f}')
-                copy2(f, f"{temp_dir}{f}")
+                copy2(f, f"{temp_dir}")
                 count += 1
         print(f"Files moved: {count}")
 
-    def rename_files(self, dir_list: str) -> None:
+    # TODO: add error handling
+    def rename_files(self, dir_list: str, temp_dir: str) -> None:
         """Rename files method
         :param dir_list: Temp directory file list used in bulk renaming process
         """
         count = 0
+        print(temp_dir)
         for i, f in enumerate(dir_list, start=1):
-            # f_name, f_ext = os.path.splitext(f)
-            f_name = PurePath(f).stem
-            f_ext = PurePath(f).suffix
-            pic_date, student, a_num = f_name.split('_')
-            pic_date = pic_date.strip().zfill(4)
-            student = student.strip()
-            a_num = a_num.strip()
-            a_num_masked = a_num[5:].strip()
+            try:
+                print(f)
+                # f_name, f_ext = os.path.splitext(f)
+                f_name = PurePath(f).stem
+                f_ext = PurePath(f).suffix
+                pic_date, student, a_num = f_name.split('_')
+                pic_date = pic_date.strip().zfill(4)
+                student = student.strip()
+                a_num = a_num.strip()
+                a_num_masked = a_num[5:].strip()
+            except ValueError as err:
+                print(f"[ERROR] {err} -- {f}")
+            except Exception as err:
+                print(f"[ERROR] {err} -- {f}")
 
             try:
                 f_name_NEW = f"{pic_date}_{student}_A-{a_num_masked}{f_ext}"
@@ -89,6 +97,8 @@ class Photos:
                 Path(f).rename(f_name_NEW)
                 count += 1
             except OSError as err:
-                print(f"[ERROR] {err}")
+                print(f"[ERROR] {err} -- {f_name_NEW}")
+            except Exception as err:
+                print(f"[ERROR] {err} -- {f_name_NEW}")
 
         print(f"Files renamed: {count}")

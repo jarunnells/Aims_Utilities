@@ -10,15 +10,19 @@ from config import GUI_Setup, Button_Setup, Label_Setup, Messages
 
 
 # class MessageboxCustom():
+# class MessageboxCustom(tk.Tk):
 # class MessageboxCustom(tk.Toplevel):
-class MessageboxCustom(tk.Tk):
+class MessageboxCustom():
     """MessageboxCustom."""
 
     def __init__(self,
+                 # container,
                  title: str,
                  msg_lbl: str,
                  geometry: str = "200x200",
                  ):
+        # super().__init__(container)
+        # super().__init__()
         self.toplevel_window = tk.Toplevel()
         self.toplevel_window.title(string=title)
         self.toplevel_window.geometry(newGeometry=geometry)
@@ -37,6 +41,10 @@ class MessageboxCustom(tk.Tk):
             lambda e: self.destroy_window(self.toplevel_window)
         )
         self.toplevel_window.mainloop()
+
+    # def __call__(self):
+    #     self.self.toplevel_window.mainloop()
+    #     self.mainloop()
 
     def __del__(self):
         return self.confirmed
@@ -113,6 +121,7 @@ def main():
     title = Messages.INSTRUCTIONS['title']
     msg_lbl = Messages.INSTRUCTIONS['message']
     geometry = "450x225"
+    # msgbox = MessageboxCustom(tk.Tk(), title=title, msg_lbl=msg_lbl, geometry=geometry)
     msgbox = MessageboxCustom(title=title, msg_lbl=msg_lbl, geometry=geometry)
     print(f"msgbox.__del__(): {msgbox.__del__()}")
     print(f"msgbox.confirmed: {msgbox.confirmed}")
