@@ -103,7 +103,7 @@ class GUI(tk.Frame):
         self.container.grid_columnconfigure(index=0, weight=1)
 
         # INSTANTIATE FRAMES -> SUB-CONTAINERS
-        # self.frame_header = ttk.Frame(master=self.container)
+        self.frame_header = ttk.Frame(master=self.container)
         self.frame_nav = ttk.Frame(master=self.container)
         self.frame_interface_parent = ttk.Frame(master=self.container)
         self.frame_interface_child_rename = ttk.Frame(master=self.frame_interface_parent)
@@ -111,32 +111,11 @@ class GUI(tk.Frame):
 
         # APPLY STYLING
         self.container.configure(style="Container.TFrame")
-        # self.frame_header.configure(style="Header.TFrame")
+        self.frame_header.configure(style="Header.TFrame")
         self.frame_nav.configure(style="Navigation.TFrame")
         self.frame_interface_parent.configure(style="Interface.TFrame")
         self.frame_interface_child_rename.configure(style="Rename.TFrame")
         self.frame_interface_child_photo.configure(style="Photo.TFrame")
-
-        # self.frame_header.grid({
-        #     **Frame_Setup.KWARGS_GRID_INIT,
-        #     **Frame_Setup.KWARGS_GRID_HEADER
-        # })
-        self.frame_nav.grid({
-            **Frame_Setup.KWARGS_GRID_INIT,
-            **Frame_Setup.KWARGS_GRID_NAV
-        })
-        self.frame_interface_parent.grid({
-            **Frame_Setup.KWARGS_GRID_INIT,
-            **Frame_Setup.KWARGS_GRID_INTERFACE_PARENT
-        })
-        self.frame_interface_child_rename.grid({
-            **Frame_Setup.KWARGS_GRID_INIT,
-            **Frame_Setup.KWARGS_GRID_INTERFACE_CHILD_RENAME
-        })
-        self.frame_interface_child_photo.grid({
-            **Frame_Setup.KWARGS_GRID_INIT,
-            **Frame_Setup.KWARGS_GRID_INTERFACE_CHILD_PHOTO
-        })
 
         # FRAMES = [
         #     self.frame_header,
@@ -146,8 +125,33 @@ class GUI(tk.Frame):
         #     self.frame_interface_child_photo,
         # ]
 
-        # for i, frame in enumerate(FRAMES):
+        # for i, frame in enumerate(FRAMES, start=0):
         #     frame.pack(cnf=Frame_Setup.CNF, side=Frame_Setup.SIDES[i])
+
+        self.frame_header.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_HEADER)
+        self.frame_nav.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_NAV)
+        self.frame_interface_parent.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_INTERFACE_PARENT)
+
+        # self.frame_header.grid({
+        #     **Frame_Setup.KWARGS_GRID_INIT,
+        #     **Frame_Setup.KWARGS_GRID_HEADER
+        # })
+        # self.frame_nav.grid({
+        #     **Frame_Setup.KWARGS_GRID_INIT,
+        #     **Frame_Setup.KWARGS_GRID_NAV
+        # })
+        # self.frame_interface_parent.grid({
+        #     **Frame_Setup.KWARGS_GRID_INIT,
+        #     **Frame_Setup.KWARGS_GRID_INTERFACE_PARENT
+        # })
+        self.frame_interface_child_rename.grid({
+            **Frame_Setup.KWARGS_GRID_INIT,
+            **Frame_Setup.KWARGS_GRID_INTERFACE_CHILD_RENAME
+        })
+        self.frame_interface_child_photo.grid({
+            **Frame_Setup.KWARGS_GRID_INIT,
+            **Frame_Setup.KWARGS_GRID_INTERFACE_CHILD_PHOTO
+        })
 
     def create_buttons(self):
         """create_buttons >> Add button widgets to frame(s)
