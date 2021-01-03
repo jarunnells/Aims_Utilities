@@ -27,7 +27,7 @@ class GUI(tk.Frame):
                  x: int,
                  y: int
                  ):
-        super(GUI, self).__init__(master=master)
+        super().__init__(master=master)
         self.master = master
         self.master.title(string=title)
         self.master.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
@@ -35,7 +35,7 @@ class GUI(tk.Frame):
             width=GUI_Setup.RESIZABLE['width'],
             height=GUI_Setup.RESIZABLE['height']
         )
-        # self.master['bg'] = GUI_Setup.COLORS['BLUE']['hex']
+        self.master['bg'] = GUI_Setup.COLORS['BLUE']['hex']
         self.default_font = tk_font.Font(
             family=GUI_Setup.FONTS['DEFAULT']['family'],
             size=GUI_Setup.FONTS['DEFAULT']['size'],
@@ -99,19 +99,19 @@ class GUI(tk.Frame):
         # MAIN CONTAINER
         self.container = ttk.Frame(master=self.master, padding=(10,))
         self.container.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
-        self.container.grid_rowconfigure(index=0, weight=1)
-        self.container.grid_columnconfigure(index=0, weight=1)
+        # self.container.grid_rowconfigure(index=0, weight=1)
+        # self.container.grid_columnconfigure(index=0, weight=1)
 
         # INSTANTIATE FRAMES -> SUB-CONTAINERS
-        self.frame_header = ttk.Frame(master=self.container)
-        self.frame_nav = ttk.Frame(master=self.container)
+        # self.frame_header = ttk.Frame(master=self.container)
+        self.frame_nav = ttk.Frame(master=self.container, padding=(5,))
         self.frame_interface_parent = ttk.Frame(master=self.container)
         self.frame_interface_child_rename = ttk.Frame(master=self.frame_interface_parent)
         self.frame_interface_child_photo = ttk.Frame(master=self.frame_interface_parent)
 
         # APPLY STYLING
         self.container.configure(style="Container.TFrame")
-        self.frame_header.configure(style="Header.TFrame")
+        # self.frame_header.configure(style="Header.TFrame")
         self.frame_nav.configure(style="Navigation.TFrame")
         self.frame_interface_parent.configure(style="Interface.TFrame")
         self.frame_interface_child_rename.configure(style="Rename.TFrame")
@@ -128,22 +128,23 @@ class GUI(tk.Frame):
         # for i, frame in enumerate(FRAMES, start=0):
         #     frame.pack(cnf=Frame_Setup.CNF, side=Frame_Setup.SIDES[i])
 
-        self.frame_header.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_HEADER)
-        self.frame_nav.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_NAV)
-        self.frame_interface_parent.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_INTERFACE_PARENT)
+        # self.frame_header.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_HEADER)
+        # self.frame_nav.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_NAV)
+        # self.frame_header.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_HEADER)
+        # self.frame_interface_parent.pack(cnf=Frame_Setup.CNF, **Frame_Setup.KWARGS_PACK_INTERFACE_PARENT)
 
         # self.frame_header.grid({
         #     **Frame_Setup.KWARGS_GRID_INIT,
         #     **Frame_Setup.KWARGS_GRID_HEADER
         # })
-        # self.frame_nav.grid({
-        #     **Frame_Setup.KWARGS_GRID_INIT,
-        #     **Frame_Setup.KWARGS_GRID_NAV
-        # })
-        # self.frame_interface_parent.grid({
-        #     **Frame_Setup.KWARGS_GRID_INIT,
-        #     **Frame_Setup.KWARGS_GRID_INTERFACE_PARENT
-        # })
+        self.frame_nav.grid({
+            **Frame_Setup.KWARGS_GRID_INIT,
+            **Frame_Setup.KWARGS_GRID_NAV
+        })
+        self.frame_interface_parent.grid({
+            **Frame_Setup.KWARGS_GRID_INIT,
+            **Frame_Setup.KWARGS_GRID_INTERFACE_PARENT
+        })
         self.frame_interface_child_rename.grid({
             **Frame_Setup.KWARGS_GRID_INIT,
             **Frame_Setup.KWARGS_GRID_INTERFACE_CHILD_RENAME
@@ -154,7 +155,7 @@ class GUI(tk.Frame):
         })
 
     def create_buttons(self):
-        """create_buttons >> Add button widgets to frame(s)
+        """create_buttons >> Add button widgets to frame(s).
 
         [extended_summary]
         """
@@ -187,6 +188,12 @@ class GUI(tk.Frame):
         return self.fs_.ask_dir()
 
     def rename_files(self):
+        """RENAME FILES.
+
+        :return: Description of returned object.
+        :rtype: type
+
+        """
         print("BULK RENAME Clicked...")
         if self.p_.instructions():
             print("Good Job!")

@@ -48,13 +48,40 @@ class GUI_Setup:
 
 
 class Frame_Setup:
-    KWARGS_FRAME = {
+    KWARGS_FRAME_INIT = {
         "padding": (5,),
         "relief": tk.FLAT,
         "borderwidth": None,
+    }
+    KWARGS_FRAME_CONTAINER = {
         "width": None,
         "height": None,
-        "style": None,
+        "style": "Container.TFrame",
+    }
+    KWARGS_FRAME_HEADER = {
+        "width": None,
+        "height": None,
+        "style": "Header.TFrame",
+    }
+    KWARGS_FRAME_NAV = {
+        "width": None,
+        "height": None,
+        "style": "Navigation.TFrame",
+    }
+    KWARGS_FRAME_INTERFACE_PARENT = {
+        "width": None,
+        "height": None,
+        "style": "Interface.TFrame",
+    }    
+    KWARGS_FRAME_INTERFACE_CHILD_RENAME = {
+        "width": None,
+        "height": None,
+        "style": "Rename.TFrame",
+    }
+    KWARGS_FRAME_INTERFACE_CHILD_PHOTO = {
+        "width": None,
+        "height": None,
+        "style": "Photo.TFrame",
     }
     KWARGS_PACK_INIT = {
         "padx": 5,
@@ -62,20 +89,25 @@ class Frame_Setup:
         "ipadx": 5,
         "ipady": 5,
     }
+    KWARGS_PACK_CONTAINER = {
+        "side": tk.TOP,
+        "expand": True,
+        "fill": tk.BOTH,
+    }
     KWARGS_PACK_HEADER = {
         "side": tk.TOP,
-        "expand": tk.YES,
-        "fill": tk.BOTH,
+        "expand": True,
+        "fill": tk.X,
     }
     KWARGS_PACK_NAV = {
         "side": tk.LEFT,
-        "expand": tk.YES,
-        "fill": tk.BOTH,
+        "expand": True,
+        "fill": tk.Y,
     }
     KWARGS_PACK_INTERFACE_PARENT = {
         # "side": tk.LEFT,
         "side": tk.RIGHT,
-        "expand": tk.YES,
+        "expand": True,
         "fill": tk.BOTH,
     }
     KWARGS_GRID_INIT = {
@@ -85,34 +117,37 @@ class Frame_Setup:
         "ipady": 5,
     }
     KWARGS_GRID_HEADER = {
-        "column": 0,
+        "column": 1,
         "row": 0,
-        "sticky": tk.N,  # "sticky": tk.N+tk.S+tk.E+tk.W
-        "columnspan": None,
+        "sticky": tk.N,
+        # "sticky": tk.N + tk.S + tk.E + tk.W,
+        "columnspan": 2,
     }
     KWARGS_GRID_NAV = {
         "column": 0,
         "row": 0,
-        "sticky": tk.N + tk.S + tk.W,  # "sticky": tk.N+tk.S+tk.E+tk.W
+        "sticky": tk.N + tk.S + tk.W,
+        # "sticky": tk.N + tk.S + tk.E + tk.W,
         "columnspan": 1,
     }
     KWARGS_GRID_INTERFACE_PARENT = {
         "column": 1,
         "row": 0,
-        "sticky": tk.N + tk.W,  # "sticky": tk.N+tk.S+tk.E+tk.W
-        "columnspan": 2,
+        # "sticky": tk.N + tk.W,
+        "sticky": tk.N + tk.S + tk.E + tk.W,
+        "columnspan": 1,
     }
     KWARGS_GRID_INTERFACE_CHILD_RENAME = {
-        "column": 1,
+        "column": 0,
         "row": 0,
-        "sticky": tk.N + tk.W,  # "sticky": tk.N+tk.S+tk.E+tk.W
-        "columnspan": 2,
+        "sticky": tk.N + tk.S + tk.E + tk.W,
+        "columnspan": 1,
     }
     KWARGS_GRID_INTERFACE_CHILD_PHOTO = {
-        "column": 1,
+        "column": 0,
         "row": 0,
-        "sticky": tk.N + tk.W,  # "sticky": tk.N+tk.S+tk.E+tk.W
-        "columnspan": 2,
+        "sticky": tk.N + tk.S + tk.E + tk.W,
+        "columnspan": 1,
     }
     SIDES = (tk.TOP, tk.LEFT, tk.RIGHT, None, None,)
     CNF = KWARGS_PACK_INIT
