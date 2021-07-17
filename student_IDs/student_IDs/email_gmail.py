@@ -25,7 +25,7 @@ class EmailGmail:
         self.LOCAL = cfg['GMAIL'].get('LOCAL', None)
         self.DOMAIN = cfg['GMAIL'].get('DOMAIN', None)
         self.SERVER = cfg['GMAIL'].get('SERVER', None)
-        self.PORT = cfg['GMAIL'].get('PORT', None)
+        self.PORT_TLS = cfg['GMAIL'].get('PORT_TLS', None)
         self.PORT_SSL = cfg['GMAIL'].get('PORT_SSL', None)
         self.SENDER = Address(display_name=self.DISPLAY,
                               username=self.LOCAL,
@@ -96,8 +96,8 @@ class EmailGmail:
     def email_send(self):
         with smtplib.SMTP_SSL(host=self.SERVER, port=self.PORT_SSL) as self.smtp:
             # LOGIN
-            self.smtp.login(self.cfg['GMAIL'].get('USER', None),
-                            self.cfg['GMAIL'].get('PASS', None)
+            self.smtp.login(user=self.cfg['GMAIL'].get('USER', None),
+                            password=self.cfg['GMAIL'].get('PASS', None)
                             )
             # SEND EMAIL
             self.smtp.send_message(self.message)
